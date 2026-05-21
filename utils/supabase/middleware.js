@@ -11,6 +11,11 @@ export async function updateSession(request) {
     },
   });
 
+  // Allow the app to run even if Supabase env vars are not configured.
+  if (!supabaseUrl || !supabaseKey) {
+    return response;
+  }
+
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       getAll() {
@@ -25,7 +30,12 @@ export async function updateSession(request) {
   });
 
   // Touch the session so refresh tokens are rotated when needed.
-  await supabase.auth.getUser();
+  // If Supabase is temporarily unavailable, continue without blocking requests.
+  try {
+    await supabase.auth.getUser();
+  } catch {
+    return response;
+  }
 
   return response;
 }
