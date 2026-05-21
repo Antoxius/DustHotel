@@ -1,11 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { z } from "zod";
 
 const namePattern = /^[A-Za-zÆØÅæøå\-\s']+$/;
 
 const baseSchema = z.object({
+    hotelSlug: z
+      .string()
+      .trim()
+      .min(1, "Vælg et hotel."),
     guestName: z
       .string()
       .trim()
@@ -44,24 +49,30 @@ const ratingSchema = baseSchema.superRefine((data, ctx) => {
   });
 
 const fieldSchemas = {
+  hotelSlug: baseSchema.pick({ hotelSlug: true }),
   guestName: baseSchema.pick({ guestName: true }),
   guestEmail: baseSchema.pick({ guestEmail: true }),
   rating: baseSchema.pick({ rating: true }),
   comment: baseSchema.pick({ comment: true }),
 };
 
-const initialValues = {
+const createInitialValues = (defaultHotelSlug) => ({
+  hotelSlug: defaultHotelSlug,
   guestName: "",
   guestEmail: "",
   rating: "5",
   comment: "",
-};
+});
 
-export default function RatingForm({ hotelName }) {
-  const [formValues, setFormValues] = useState(initialValues);
+export default function RatingForm({ hotels, defaultHotelSlug }) {
+  const router = useRouter();
+  const [formValues, setFormValues] = useState(createInitialValues(defaultHotelSlug));
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [status, setStatus] = useState("");
+
+  const selectedHotel = hotels.find((item) => item.slug === formValues.hotelSlug);
+  const selectedHotelName = selectedHotel?.name || "hotellet";
 
   const getFieldError = (name, value) => {
     const parsed = fieldSchemas[name].safeParse({ [name]: value });
@@ -126,11 +137,12 @@ export default function RatingForm({ hotelName }) {
     setFieldError(name, fieldError);
   };
 
-  const onSubmit = (event) => {
+  const onSubmit = async (event) => {
     event.preventDefault();
     setStatus("");
 
     const payload = {
+      hotelSlug: formValues.hotelSlug,
       guestName: formValues.guestName,
       guestEmail: formValues.guestEmail,
       rating: formValues.rating,
@@ -140,6 +152,7 @@ export default function RatingForm({ hotelName }) {
     const result = validateAll(payload);
 
     setTouched({
+      hotelSlug: true,
       guestName: true,
       guestEmail: true,
       rating: true,
@@ -152,13 +165,34 @@ export default function RatingForm({ hotelName }) {
       return;
     }
 
+    const response = await fetch("/api/reviews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(result.data),
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok || !responseData.ok) {
+      if (responseData.errors) {
+        setErrors(responseData.errors);
+      }
+      setStatus("Kunne ikke gemme anmeldelsen. Prøv igen.");
+      return;
+    }
+
     setStatus(
-      `Tak ${result.data.guestName}. Din bedømmelse på ${result.data.rating} stjerner for ${hotelName} er klar til at blive sendt.`
+      `Tak ${result.data.guestName}. Din bedømmelse på ${result.data.rating} stjerner for ${selectedHotelName} er nu publiceret.`
     );
 
-    setFormValues(initialValues);
+    setFormValues(createInitialValues(result.data.hotelSlug));
     setErrors({});
     setTouched({});
+
+    router.push(`/hotels/${result.data.hotelSlug}`);
+    router.refresh();
   };
 
   const fieldError = (name) => (errors[name] ? errors[name][0] : "");
@@ -172,11 +206,32 @@ export default function RatingForm({ hotelName }) {
     <section className="section-card soft-shadow rounded-2xl p-6 sm:p-8">
       <h2 className="font-display text-3xl sm:text-4xl leading-tight text-primary">Bedøm dit seneste ophold</h2>
       <p className="mt-2 text-xs sm:text-sm text-ink-muted">
-        Du bedømmer {hotelName}. Denne skabelon validerer på klienten med Zod, før data
+        Du bedømmer {selectedHotelName}. Denne skabelon validerer på klienten med Zod, før data
         sendes til et API.
       </p>
 
       <form onSubmit={onSubmit} noValidate className="mt-5 grid gap-4 sm:gap-5 grid-cols-1 sm:grid-cols-2">
+        <label className="grid gap-1.5 text-xs sm:text-sm font-semibold tracking-[0.01em] text-foreground sm:col-span-2">
+          Hotel
+          <select
+            name="hotelSlug"
+            value={formValues.hotelSlug}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            className={inputClass("hotelSlug")}
+            aria-invalid={Boolean(fieldError("hotelSlug"))}
+          >
+            {hotels.map((hotel) => (
+              <option key={hotel.slug} value={hotel.slug}>
+                {hotel.name}
+              </option>
+            ))}
+          </select>
+          {fieldError("hotelSlug") ? (
+            <span className="text-xs text-rose-700">{fieldError("hotelSlug")}</span>
+          ) : null}
+        </label>
+
         <label className="grid gap-1.5 text-xs sm:text-sm font-semibold tracking-[0.01em] text-foreground sm:col-span-1">
           Gæstens navn
           <input

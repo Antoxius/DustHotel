@@ -1,0 +1,128 @@
+[
+  {
+    "slug": "det-stoevede-hotel",
+    "legacySlugs": ["det-støvede-hotel"],
+    "name": "Det støvede hotel",
+    "city": "Rødovre",
+    "rating": 4.8,
+    "reviewCount": 312,
+    "priceRange": "GRATIS",
+    "nightlyRate": 189,
+    "summary": "Værelser i sydvestlig stil med private gårdhaver, adobe-teksturer og en rooftop-lounge til solnedgang.",
+    "description": "The Dustline Suites kombinerer ørkenfarver, håndlavede møbler og rolige fællesområder designet til lange weekender.",
+    "tags": ["Tagterrasse", "Pool", "Morgenmad"],
+    "comments": [
+      
+    ],
+    "amenities": [
+      "Døgnåben indtjekning - Kræver reservation eller nødsituation",
+      "Gratis Wi-Fi så længe værten ikke er til stede (Er værten til stede slukkes wifi kl 22:00 og tændes igen når der spørges efter det næste morgen, så du kan få en god nats søvn)",
+      "Fri bar, så længe værten ikke er til stede",
+      "Lufthavns transport (Med mere)",
+      "Gratis parkering på stedet",
+      "Renoverede værelser i kælder",
+      "Fisk",
+      "Enkelt eller 2-mandsværelser",
+      "Familieværelser",
+      "Extra soveværelse med smart features som fx. ingen dør så alt kan høres",
+      "Gratis morgenmad (Se hvad der er i køleren)",
+      "Rengøring hver dag",
+      "Kæledyr tilladt (Tilladte kæledyr inkluderer bla. Katte, og diverse insekter som f.eks fnat og babier)",
+      "Handicapvenlige værelser"
+    ],
+    "address": {
+      "street": "Engbovej 93",
+      "postalCode": "2610",
+      "city": "Rødovre",
+      "country": "Danmark"
+    },
+    "contact": {
+      "phone": "",
+      "email": ""
+    },
+    "ejendomsdata": {
+      "antalVaerelser": 4,
+      "boligareal": 83,
+      "vejgetal": 118.9,
+      "senesteSalgspris": 1900000,
+      "senesteSalgsar": 2012,
+      "nuvarendePris": 3150000,
+      "prisVurderingAar": 2024,
+      "mPrisPris": 15966
+    },
+    "bygningsdetaljer": {
+      "senesteOmbygningsaar": null,
+      "antalPlan": 1,
+      "antalEtager": 0,
+      "antalToiletter": 1,
+      "varmeinstallation": "Centralvarme med én fyringsenhed",
+      "ydervaegg": "Mursten",
+      "vaegtAtAreal": 118.9,
+      "tagtype": "Tegl"
+    }
+  },
+  {
+    "slug": "lyshaven-villa",
+    "name": "Lyshaven Villa",
+    "city": "Frederiksberg",
+    "rating": 4.6,
+    "reviewCount": 148,
+    "priceRange": "$$$",
+    "nightlyRate": 224,
+    "summary": "En klassisk byvilla med lyse saloner, rolige læsehjørner og en lille gårdhave i baghuset.",
+    "description": "Lyshaven Villa er et mere urbant ophold med fokus på lyse materialer, bløde tekstiler og et kompakt, roligt bymiljø.",
+    "tags": ["Byvilla", "Gårdhave", "Rolige værelser"],
+    "comments": [
+      {
+        "author": "Amalie N.",
+        "rating": 5,
+        "text": "Meget roligt om natten og super beliggenhed tæt på byen.",
+        "date": "2026-04-01"
+      },
+      {
+        "author": "Kasper T.",
+        "rating": 4,
+        "text": "Flot indretning og god service. Ville ønske der var lidt senere check-out.",
+        "date": "2026-03-14"
+      }
+    ],
+    "amenities": [
+      "Morgenmad serveret i stueetagen",
+      "Hurtigt Wi-Fi",
+      "Selskabsstue",
+      "Cykelparkering",
+      "Adgang til gårdhave",
+      "Familievenlige værelser"
+    ],
+    "address": {
+      "street": "Nordre Fasanvej 12",
+      "postalCode": "2000",
+      "city": "Frederiksberg",
+      "country": "Danmark"
+    },
+    "contact": {
+      "phone": "",
+      "email": ""
+    },
+    "ejendomsdata": {
+      "antalVaerelser": 6,
+      "boligareal": 124,
+      "vejgetal": 137.5,
+      "senesteSalgspris": 2550000,
+      "senesteSalgsar": 2018,
+      "nuvarendePris": 4295000,
+      "prisVurderingAar": 2024,
+      "mPrisPris": 31145
+    },
+    "bygningsdetaljer": {
+      "senesteOmbygningsaar": 2021,
+      "antalPlan": 2,
+      "antalEtager": 2,
+      "antalToiletter": 2,
+      "varmeinstallation": "Fjernvarme",
+      "ydervaegg": "Pudset murværk",
+      "vaegtAtAreal": 137.5,
+      "tagtype": "Skifer"
+    }
+  }
+]

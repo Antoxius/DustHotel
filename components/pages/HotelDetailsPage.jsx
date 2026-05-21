@@ -16,20 +16,40 @@ function DetailRow({ label, value }) {
   );
 }
 
-export default function HotelDetailsPage({ hotel }) {
+function formatCommentDate(dateString) {
+  if (!dateString) {
+    return "";
+  }
+
+  const parsed = new Date(dateString);
+
+  if (Number.isNaN(parsed.getTime())) {
+    return dateString;
+  }
+
+  return new Intl.DateTimeFormat("da-DK", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(parsed);
+}
+
+export default function HotelDetailsPage({ hotel, userComments = [] }) {
   const b = hotel.bygningsdetaljer ?? {};
   const addr = hotel.address ?? {};
   const e = hotel.ejendomsdata ?? {};
+  const staticComments = hotel.comments ?? [];
+  const comments = [...userComments, ...staticComments];
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
 
       {/* Back link */}
       <Link
-        href="/"
+        href="/hotels"
         className="mb-8 inline-flex items-center gap-1.5 text-sm font-medium tracking-[0.02em] text-ink-muted transition-colors hover:text-primary"
       >
-        ← Tilbage til forsiden
+        ← Tilbage til hoteller
       </Link>
 
       {/* ── Hero ── */}
@@ -62,20 +82,30 @@ export default function HotelDetailsPage({ hotel }) {
         )}
       </section>
 
-      {/* ── Highlights + Amenities ── */}
+      {/* ── Comments + Amenities ── */}
       <div className="mb-6 grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
         <section className="section-card soft-shadow rounded-3xl p-6 sm:p-8">
-          <SectionHeading>Højdepunkter</SectionHeading>
-          <div className="mt-3 sm:mt-4 flex flex-wrap gap-2">
-            {hotel.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-secondary/40 bg-surface px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs font-semibold tracking-wide text-secondary"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+          <SectionHeading>Kommentarer fra gæster</SectionHeading>
+          {comments.length > 0 ? (
+            <ul className="mt-3 sm:mt-4 grid gap-3">
+              {comments.map((comment, index) => (
+                <li
+                  key={`${comment.author}-${comment.date}-${comment.text}-${index}`}
+                  className="rounded-xl border border-border-soft bg-text-light/80 px-3 sm:px-4 py-3"
+                >
+                  <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-sm font-semibold text-primary">{comment.author}</p>
+                    <p className="text-xs font-medium text-ink-muted">
+                      {comment.rating}/5 {comment.date ? `· ${formatCommentDate(comment.date)}` : ""}
+                    </p>
+                  </div>
+                  <p className="text-xs sm:text-sm text-foreground leading-relaxed">{comment.text}</p>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="mt-3 sm:mt-4 text-sm text-ink-muted">Ingen kommentarer endnu.</p>
+          )}
         </section>
 
         <section className="section-card soft-shadow rounded-3xl p-6 sm:p-8">
@@ -173,8 +203,11 @@ export default function HotelDetailsPage({ hotel }) {
       )}
 
       {/* ── CTA ── */}
-      <div className="mt-10 flex justify-center">
-        <Link href="/rate" className="btn-primary px-10 py-3.5 text-base">
+      <div className="mt-10 flex flex-col sm:flex-row justify-center gap-3">
+        <Link href="/hotels" className="btn-secondary rounded-full px-8 py-3 text-sm sm:text-base text-center">
+          Vælg et andet hotel
+        </Link>
+        <Link href="/rate" className="btn-primary rounded-full px-8 py-3 text-sm sm:text-base text-center">
           Bedøm dit ophold
         </Link>
       </div>

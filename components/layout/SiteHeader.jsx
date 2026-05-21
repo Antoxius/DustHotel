@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { hotel } from "@/lib/hotels";
 
 const navItems = [
   { href: "/", label: "Forside" },
-  { href: `/hotels/${hotel.slug}`, label: "Hotellet" },
+  { href: "/hotels", label: "Hoteller" },
   { href: "/rate", label: "Bedøm ophold" },
 ];
 

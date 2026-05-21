@@ -6,10 +6,18 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:check": "node scripts/check-db-setup.mjs",
+    "db:migrate-reviews": "node scripts/migrate-reviews-to-db.mjs",
+    "db:backup-reviews": "node scripts/backup-reviews.mjs",
+    "db:restore-reviews": "node scripts/restore-reviews-from-backup.mjs"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.1",
+    "dotenv": "^17.4.2",
     "next": "16.2.6",
+    "pg": "^8.21.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "zod": "^4.4.3"

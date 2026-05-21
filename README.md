@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# DustHotel
 
-## Getting Started
+Next.js hotelsite med dynamiske anmeldelser via API og PostgreSQL.
 
-First, run the development server:
+## Hurtig setup (lokalt)
+
+1. Installer dependencies:
+
+```bash
+npm install
+```
+
+2. Opret env-fil ved siden af package.json:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Udfyld minimum disse variabler i .env.local:
+
+```env
+DATABASE_URL=postgres://...
+DATABASE_SSL=
+BACKUP_TARGET=backups/reviews
+BACKUP_RETENTION_DAYS=3650
+```
+
+Tip: Hvis din provider kræver no-ssl lokalt, sæt DATABASE_SSL=disable.
+
+4. Kør DB-check:
+
+```bash
+npm run db:check
+```
+
+5. Migrer gamle fil-anmeldelser til database:
+
+```bash
+npm run db:migrate-reviews
+```
+
+6. Start app:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Database scripts
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- DB forbindelse og tabelcheck:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run db:check
+```
 
-## Learn More
+- Migrer eksisterende anmeldelser fra data/reviews.json:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run db:migrate-reviews
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Opret backupfil:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run db:backup-reviews
+```
 
-## Deploy on Vercel
+- Restore fra seneste backup (eller specifik sti):
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run db:restore-reviews
+npm run db:restore-reviews -- backups/reviews/reviews-2026-01-01T00-00-00-000Z.json
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## GitHub Actions backup
+
+Workflowen i .github/workflows/reviews-backup.yml kører automatisk daglig backup.
+
+Sæt følgende GitHub Secrets:
+
+- DATABASE_URL
+- DATABASE_SSL (valgfri)
+
+Workflowen:
+
+1. Henter alle anmeldelser
+2. Gemmer snapshot i backups/reviews
+3. Commiter backupfiler tilbage til repo
+
+## Langtidsbevaring (grov strategi)
+
+For høj robusthed over mange år:
+
+1. Behold PostgreSQL som primær datakilde.
+2. Kør daglig backup (workflow er allerede sat op).
+3. Gem repo-backups flere steder (GitHub + separat cloud storage).
+4. Test restore mindst kvartalsvist med db:restore-reviews.
+

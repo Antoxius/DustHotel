@@ -1,11 +1,11 @@
-import { redirect } from "next/navigation";
-import { hotel } from "@/lib/hotels";
+import HotelsPage from "@/components/pages/HotelsPage";
+import { hotels } from "@/lib/hotels";
 
 export const metadata = {
-  title: "Hotellet | Hotel Barndomshjemmet",
-  description: "Se hotelprofilen for Hotel Barndomshjemmet.",
+  title: "Hoteller | Hotel Barndomshjemmet",
+  description: "Vælg et hotel og åbn en dynamisk detaljeside.",
 };
 
 export default function HotelsRoutePage() {
-  redirect(`/hotels/${hotel.slug}`);
+  return <HotelsPage hotels={hotels} />;
 }

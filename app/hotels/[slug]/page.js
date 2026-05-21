@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import HotelDetailsPage from "@/components/pages/HotelDetailsPage";
 import { getAllHotelSlugs, getHotelBySlug } from "@/lib/hotels";
+import { getReviewsByHotelSlug } from "@/lib/reviewsServer";
+
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return getAllHotelSlugs().map((slug) => ({ slug }));
@@ -28,5 +31,7 @@ export default async function HotelSlugRoutePage({ params }) {
     notFound();
   }
 
-  return <HotelDetailsPage hotel={hotel} />;
+  const userComments = await getReviewsByHotelSlug(hotel.slug);
+
+  return <HotelDetailsPage hotel={hotel} userComments={userComments} />;
 }

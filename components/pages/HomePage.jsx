@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import HotelCard from "@/components/HotelCard";
-import { hotel } from "@/lib/hotels";
+import { hotels } from "@/lib/hotels";
 
 
 export default function HomePage() {
@@ -22,10 +22,10 @@ export default function HomePage() {
 
         <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row flex-wrap gap-2.5 sm:gap-3">
           <Link
-            href={`/hotels/${hotel.slug}`}
+            href="/hotels"
             className="btn-primary rounded-full px-4 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold tracking-[0.02em] transition text-center"
           >
-            Se hotellet
+            Se hotellerne
           </Link>
           <Link
             href="/rate"
@@ -41,8 +41,10 @@ export default function HomePage() {
           <h2 className="font-display text-2xl sm:text-3xl lg:text-4xl text-primary">Hotelprofil</h2>
         </div>
 
-        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2">
-          <HotelCard hotel={hotel} />
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          {hotels.map((hotel) => (
+            <HotelCard key={hotel.slug} hotel={hotel} />
+          ))}
         </div>
       </section>
     </main>
