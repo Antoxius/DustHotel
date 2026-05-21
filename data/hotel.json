@@ -1,0 +1,41 @@
+{
+  "slug": "hotel-barndomshjemmet",
+  "name": "Hotel Barndomshjemmet",
+  "city": "Rødovre",
+  "rating": 4.8,
+  "reviewCount": 312,
+  "priceRange": "$$$",
+  "nightlyRate": 189,
+  "summary": "Værelser i sydvestlig stil med private gårdhaver, adobe-teksturer og en rooftop-lounge til solnedgang.",
+  "description": "The Dustline Suites kombinerer ørkenfarver, håndlavede møbler og rolige fællesområder designet til lange weekender.",
+  "address": {
+    "street": "Engbovej 93",
+    "postalCode": "2610",
+    "city": "Rødovre",
+    "country": "Danmark"
+  },
+  "contact": {
+    "phone": "",
+    "email": ""
+  },
+  "ejendomsdata": {
+    "antalVaerelser": 4,
+    "boligareal": 83,
+    "vejgetal": 118.9,
+    "senesteSalgspris": 1900000,
+    "senesteSalgsar": 2012,
+    "nuvarendePris": 3150000,
+    "prisVurderingAar": 2024,
+    "mPrisPris": 15966
+  },
+  "bygningsdetaljer": {
+    "senesteOmbygningsaar": null,
+    "antalPlan": 1,
+    "antalEtager": 0,
+    "antalToiletter": 1,
+    "varmeinstallation": "Centralvarme med én fyringsenhed",
+    "ydervaegg": "Mursten",
+    "vaegtAtAreal": 118.9,
+    "tagtype": "Tegl"
+  }
+}

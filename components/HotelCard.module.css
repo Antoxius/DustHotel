@@ -1,0 +1,21 @@
+.card {
+  background: #efe5f2;
+  border: 1px solid #d8c8dd;
+  box-shadow: 0 10px 30px rgba(43, 24, 56, 0.12);
+}
+
+.grain {
+  position: relative;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 25%, rgba(110, 75, 122, 0.25) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 70%, rgba(110, 75, 122, 0.2) 0 1px, transparent 1px);
+  background-size: 8px 8px, 10px 10px;
+}

@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f3ec;
+  --foreground: #24152e;
+  --surface: #efe5f2;
+  --surface-soft: #f3ebf6;
+  --primary: #2b1838;
+  --secondary: #6e4b7a;
+  --accent: #c9a86a;
+  --accent-deep: #b89555;
+  --ink-muted: #7a6a82;
+  --text-light: #fff8f0;
+  --border-soft: #d8c8dd;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-ink-muted: var(--ink-muted);
+  --color-text-light: var(--text-light);
+  --color-border-soft: var(--border-soft);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-cormorant);
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(201, 168, 106, 0.2) 0, transparent 42%),
+    radial-gradient(circle at 90% 82%, rgba(110, 75, 122, 0.15) 0, transparent 36%),
+    linear-gradient(145deg, #f8f3ec 0%, #f6f0ea 55%, #f3ece4 100%);
+  color: var(--foreground);
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+  letter-spacing: 0.01em;
+}
+
+p,
+label,
+input,
+textarea,
+button,
+a,
+li {
+  line-height: 1.55;
+}
+
+.soft-shadow {
+  box-shadow: 0 10px 30px rgba(43, 24, 56, 0.12);
+}
+
+.section-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: 1.5rem;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--primary);
+}
+
+.btn-primary:hover {
+  background: var(--accent-deep);
+}
+
+.btn-secondary {
+  background: var(--primary);
+  color: var(--text-light);
+}
+
+.btn-secondary:hover {
+  background: var(--secondary);
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.btn-outline:hover {
+  background: var(--accent);
+  color: var(--primary);
+}
