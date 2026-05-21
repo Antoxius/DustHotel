@@ -2,8 +2,8 @@
   "slug": "det-støvede-hotel",
   "name": "Det støvede hotel",
   "city": "Rødovre",
-  "rating": 4.8,
-  "reviewCount": 312,
+  "rating": 0.048,
+  "reviewCount": 2,
   "priceRange": "GRATIS",
   "nightlyRate": 189,
   "summary": "Værelser i sydvestlig stil med private gårdhaver, adobe-teksturer og en rooftop-lounge til solnedgang.",
@@ -26,7 +26,8 @@
     "senesteSalgsar": 2012,
     "nuvarendePris": 3150000,
     "prisVurderingAar": 2024,
-    "mPrisPris": 15966
+    "mPrisPris": 15966,
+    "Fyr": "Gasfyr"
   },
   "bygningsdetaljer": {
     "senesteOmbygningsaar": null,

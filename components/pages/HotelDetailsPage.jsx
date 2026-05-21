@@ -71,7 +71,7 @@ export default function HotelDetailsPage({ hotel, userComments = [] }) {
             <span className="rounded-full border border-accent/60 bg-accent/10 px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm font-bold text-primary whitespace-nowrap">
               {hotel.priceRange} &nbsp;·&nbsp; fra ${hotel.nightlyRate}/nat
             </span>
-            <RatingBadge score={hotel.rating} reviews={hotel.reviewCount} />
+            <RatingBadge score={hotel.rating} reviews={hotel.reviewCount} hotelSlug={hotel.slug} />
           </div>
         </div>
 

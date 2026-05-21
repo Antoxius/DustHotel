@@ -36,7 +36,7 @@ export default function HotelCard({ hotel }) {
       </div>
 
       <div className="mt-5 flex items-center justify-between gap-2 sm:gap-3 flex-wrap">
-        <RatingBadge score={hotel.rating} reviews={hotel.reviewCount} />
+        <RatingBadge score={hotel.rating} reviews={hotel.reviewCount} hotelSlug={hotel.slug} />
         <Link
           href={detailsHref}
           className="btn-secondary rounded-full px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition whitespace-nowrap"
