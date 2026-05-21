@@ -1,5 +1,6 @@
 import Link from "next/link";
 import RatingBadge from "@/components/RatingBadge";
+import AmenitiesGrid from "@/components/AmenitiesGrid";
 
 function SectionHeading({ children }) {
   return (
@@ -110,17 +111,9 @@ export default function HotelDetailsPage({ hotel, userComments = [] }) {
 
         <section className="section-card soft-shadow rounded-3xl p-6 sm:p-8">
           <SectionHeading>Faciliteter</SectionHeading>
-          <ul className="mt-3 sm:mt-4 grid gap-2.5">
-            {hotel.amenities.map((amenity) => (
-              <li
-                key={amenity}
-                className="flex items-start gap-2 rounded-xl border border-border-soft bg-text-light/80 px-3 sm:px-4 py-2.5 text-xs sm:text-sm text-foreground"
-              >
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent mt-0.5" />
-                <span className="flex-1">{amenity}</span>
-              </li>
-            ))}
-          </ul>
+          <div className="mt-3 sm:mt-4">
+            <AmenitiesGrid amenities={hotel.amenities} />
+          </div>
         </section>
       </div>
 
