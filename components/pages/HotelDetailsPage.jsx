@@ -39,8 +39,33 @@ export default function HotelDetailsPage({ hotel, userComments = [] }) {
   const b = hotel.bygningsdetaljer ?? {};
   const addr = hotel.address ?? {};
   const e = hotel.ejendomsdata ?? {};
-  const staticComments = hotel.comments ?? [];
-  const comments = [...userComments, ...staticComments];
+  const staticComments = Array.isArray(hotel.comments) ? hotel.comments : [];
+  const allComments = [
+    ...(Array.isArray(userComments) ? userComments : []),
+    ...staticComments,
+  ];
+  const comments = allComments
+    .map((comment) => {
+      const ratingValue = Number(comment?.rating);
+      const rating = Number.isFinite(ratingValue)
+        ? Math.min(5, Math.max(1, Math.round(ratingValue)))
+        : null;
+
+      return {
+        author:
+          typeof comment?.author === "string" && comment.author.trim().length > 0
+            ? comment.author.trim()
+            : "Gæst",
+        text:
+          typeof comment?.text === "string"
+            ? comment.text.trim()
+            : String(comment?.text ?? "").trim(),
+        date:
+          typeof comment?.date === "string" ? comment.date : "",
+        rating,
+      };
+    })
+    .filter((comment) => comment.text.length > 0);
 
   return (
     <main className="mx-auto w-full max-w-5xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
@@ -97,7 +122,8 @@ export default function HotelDetailsPage({ hotel, userComments = [] }) {
                   <div className="mb-1 flex flex-wrap items-center justify-between gap-2">
                     <p className="text-sm font-semibold text-primary">{comment.author}</p>
                     <p className="text-xs font-medium text-ink-muted">
-                      {comment.rating}/5 {comment.date ? `· ${formatCommentDate(comment.date)}` : ""}
+                      {comment.rating != null ? `${comment.rating}/5` : "Bedømmelse mangler"}
+                      {comment.date ? ` · ${formatCommentDate(comment.date)}` : ""}
                     </p>
                   </div>
                   <p className="text-xs sm:text-sm text-foreground leading-relaxed">{comment.text}</p>
