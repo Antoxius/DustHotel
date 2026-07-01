@@ -23,6 +23,7 @@ DATABASE_URL=postgres://...
 DATABASE_SSL=
 BACKUP_TARGET=backups/reviews
 BACKUP_RETENTION_DAYS=3650
+REVIEWS_SYNC_TOKEN=vælg-en-lang-tilfældig-hemmelig-token
 ```
 
 Tip: Hvis din provider kræver no-ssl lokalt, sæt DATABASE_SSL=disable.
@@ -65,6 +66,18 @@ npm run db:migrate-reviews
 npm run db:backup-reviews
 ```
 
+- Tjek review storage/sync-status (beskyttet endpoint):
+
+```bash
+curl -H "Authorization: Bearer $REVIEWS_SYNC_TOKEN" http://localhost:3000/api/reviews/sync
+```
+
+- Replay fil-baserede reviews til DB (beskyttet endpoint):
+
+```bash
+curl -X POST -H "Authorization: Bearer $REVIEWS_SYNC_TOKEN" http://localhost:3000/api/reviews/sync
+```
+
 - Restore fra seneste backup (eller specifik sti):
 
 ```bash
@@ -95,4 +108,12 @@ For høj robusthed over mange år:
 2. Kør daglig backup (workflow er allerede sat op).
 3. Gem repo-backups flere steder (GitHub + separat cloud storage).
 4. Test restore mindst kvartalsvist med db:restore-reviews.
+
+## Automatisk replay til DB (cron)
+
+`/api/reviews/sync` kan bruges af et cron-job for at re-sync'e `data/reviews.json` til DB.
+
+1. Sæt `REVIEWS_SYNC_TOKEN` i deployment-miljøet (eller brug `CRON_SECRET`).
+2. Kald endpointet periodisk med `Authorization: Bearer <token>`.
+3. Brug `GET /api/reviews/sync` til status og `POST /api/reviews/sync` til sync.
 
