@@ -31,7 +31,13 @@ export default async function HotelSlugRoutePage({ params }) {
     notFound();
   }
 
-  const userComments = await getReviewsByHotelSlug(hotel.slug);
+  let userComments = [];
+
+  try {
+    userComments = await getReviewsByHotelSlug(hotel.slug);
+  } catch (error) {
+    console.error(`Failed to load reviews for hotel slug "${hotel.slug}". Rendering page without reviews.`, error);
+  }
 
   return <HotelDetailsPage hotel={hotel} userComments={userComments} />;
 }
