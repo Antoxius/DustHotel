@@ -100,6 +100,16 @@ Workflowen:
 2. Gemmer snapshot i backups/reviews
 3. Commiter backupfiler tilbage til repo
 
+## Deployment checklist
+
+Hvis du deployer appen, skal disse miljøvariabler være sat i hosting-platformen:
+
+1. `DATABASE_URL` - påkrævet. Uden den bliver anmeldelser kun gemt i fallback-filen.
+2. `DATABASE_SSL` - valgfri. Sæt `disable` hvis din database kræver det lokalt.
+3. `REVIEWS_SYNC_TOKEN` eller `CRON_SECRET` - påkrævet hvis du vil bruge `/api/reviews/sync`.
+
+Hvis `DATABASE_URL` mangler eller peger på en død database, vil kommentarer stadig blive skrevet til `data/reviews.json`, men den fil er kun en fallback og bør ikke være din eneste langsigtede lagring.
+
 ## Langtidsbevaring (grov strategi)
 
 For høj robusthed over mange år:
